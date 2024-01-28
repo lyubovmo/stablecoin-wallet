@@ -1,0 +1,55 @@
+.sendForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.row {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.formControl {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.formControl:focus {
+  outline: none;
+  border: 1px solid #284b63;
+  box-shadow: 0 0 10px rgba(40, 75, 99, 0.5);
+}
+
+.error {
+  color: #f44336;
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.btnSend {
+  padding: 12px;
+  margin-top: 16px;
+  background-color: #284b63;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+@media (min-width: 769px) {
+  .sendForm {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+}

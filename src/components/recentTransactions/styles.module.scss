@@ -1,0 +1,49 @@
+.transactionsBlock {
+  padding: 2rem 0;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #475b63;
+}
+
+.transaction {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.date {
+  font-size: 0.75rem;
+  color: #adb5bd;
+}
+
+.amount {
+  font-weight: 500;
+  &.sent {
+    color: #a4161a;
+  }
+  &.received {
+    color: #04724d;
+  }
+}
+
+@media (min-width: 769px) {
+  .transactionsBlock {
+    padding: 0;
+    width: 100%;
+  }
+
+  .title {
+    margin-top: 0;
+  }
+}

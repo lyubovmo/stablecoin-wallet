@@ -1,95 +1,70 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+import React, { useState } from 'react';
+import Head from 'next/head';
+import styles from './page.module.scss';
+import StablecoinBalance from '@/components/stablecoinBalance/StablecoinBalance';
+import RecentTransactions  from '@/components/recentTransactions/RecentTransactions';
+import SendStablecoinForm from '@/components/sendForm/SendStablecoinForm';
+import Modal from "@/components/modal/Modal";
+import mockedTransactions from '@/data/transactions.json';
+import userData from '@/data/userData.json';
+import { TransactionType } from '@/types';
 
-export default function Home() {
+const HomePage: React.FC = () => {
+  const [balance, setBalance] = useState(userData.balance);
+  const [transactions, setTransactions] = useState(mockedTransactions);
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal((prevShowModal) => !prevShowModal);
+  };
+
+  const addTransaction = (newTransaction) => {
+    setTransactions([newTransaction, ...transactions]);
+    setBalance(balance - parseFloat(newTransaction.amount));
+  };
+
+  const formatDate = (date: Date): string => {
+    return date.toISOString().split('T')[0];
+  };
+
+  const handleSubmit = (recipientAddress, amount) => {
+    const newTransaction = {
+      id: transactions.length + 1,
+      type: TransactionType.SENT,
+      amount: `${amount} USDC`,
+      date: formatDate(new Date()),
+    };
+    addTransaction(newTransaction);
+    if (showModal) {
+      toggleModal();
+    }
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <div className={styles.container}>
+      <Head>
+        <title>Stablecoin Wallet</title>
+        <meta name="description" content="Stablecoin Wallet" />
+      </Head>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <main className={styles.main}>
+        <section className={styles.balanceSection}>
+          <h1 className={styles.title}>your wallet</h1>
+          <StablecoinBalance balance={balance} onBtnClick={toggleModal}/>
+        </section>
+        <section className={styles.bottomSection}>
+          <RecentTransactions transactions={transactions} />
+          <div className={styles.hideMobile}>
+            <SendStablecoinForm onSubmit={handleSubmit} balance={balance} />
+          </div>
+        </section>
+      </main>
+      <Modal isOpen={showModal} onClose={toggleModal}>
+          <SendStablecoinForm showModal={showModal} onSubmit={handleSubmit} balance={balance}/>
+      </Modal>
+    </div>
   );
-}
+};
+
+export default HomePage;
