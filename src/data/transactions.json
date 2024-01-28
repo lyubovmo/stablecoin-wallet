@@ -1,0 +1,4 @@
+[
+  { "id": 1, "type": "Sent", "amount": "50 USDC", "date": "2024-01-25" },
+  { "id": 2, "type": "Received", "amount": "100 USDC", "date": "2024-01-24" }
+]

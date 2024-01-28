@@ -1,0 +1,51 @@
+.title {
+  margin: 2rem 0 1rem;
+  font-size: 1rem;
+  color: #6c757d;
+  font-weight: 300;
+  text-align: center;
+}
+
+.balance {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #284b63;
+}
+
+.btnRow {
+  position: absolute;
+  left: calc(50% - 22px);
+  bottom: -18px;
+  z-index: 10;
+}
+
+.btnAdd {
+  background-color: #284b63;
+  width: 44px;
+  height: 44px;
+  transform: rotate(45deg);
+  border: none;
+  border-radius: 8px;
+}
+
+.btnText {
+  display: block;
+  color: #fff;
+  transform: rotate(-45deg);
+  font-size: 1.5rem;
+}
+
+@media (min-width: 769px) {
+  .btnRow {
+    display: none;
+  }
+
+  .balance {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+}
